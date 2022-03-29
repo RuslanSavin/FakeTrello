@@ -1,0 +1,12 @@
+.newCardWrapper {
+  padding: 0 0 19px 10px;
+  border: gainsboro 2px solid;
+  .newCardForm {
+    width: 90%;
+    button {
+      display: block;
+      width: 50%;
+      margin-top: 10px;
+    }
+  }
+}

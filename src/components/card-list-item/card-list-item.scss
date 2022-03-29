@@ -1,0 +1,29 @@
+.hidden {
+  display: none;
+}
+
+li {
+  padding: 10px 0 0 10px;
+  border: gainsboro 2px solid;
+  .cardTitle {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  p {
+    font-size: 16px;
+    color: dimgray;
+  }
+  button {
+    width: 45%;
+  }
+  .changeBtn {
+    background-color: yellow;
+  }
+  .deleteBtn {
+    background-color: red;
+  }
+  select {
+    margin: 10px 10px 0 0;
+  }
+
+}
