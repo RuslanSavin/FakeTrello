@@ -3,7 +3,8 @@ const updateCardList = (state, action) => {
   if (state === undefined) {
     return {
       cards: [],
-      loading: true
+      loading: true,
+      error: false
     };
   }
 
@@ -27,24 +28,28 @@ const updateCardList = (state, action) => {
     case 'FETCH_CARDS_REQUEST':
       return {
         cards: [],
-        loading: true
+        loading: true,
+        error: false
       }
 
     case 'FETCH_CARDS_SUCCESS':
       return {
         cards: action.payload,
-        loading: false
+        loading: false,
+        error: false
       }
 
     case 'FETCH_CARDS_FAILURE':
       return {
           cards: [],
-          loading: false
+          loading: false,
+          error: true
       }
 
     case 'UPDATE_CARD_REQUEST':
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: false
       }
 
     case 'UPDATE_CARD_SUCCESS':
@@ -54,18 +59,21 @@ const updateCardList = (state, action) => {
       return {
         ...state.cardList,
         cards: updateCard(cardIndex, action.payload),
+        error: false
       }
 
     case 'UPDATE_CARD_FAILURE':
 
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: true
         //TODO implement error case
       }
 
     case 'CREATE_CARD_REQUEST':
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: false
       }
 
     case 'CREATE_CARD_SUCCESS':
@@ -74,19 +82,22 @@ const updateCardList = (state, action) => {
           cards: [
             ...state.cardList.cards,
             action.payload
-          ]
+          ],
+          error: false
       }
 
     case 'CREATE_CARD_FAILURE':
 
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: true
         //TODO implement error case
       }
 
     case 'DELETE_CARD_REQUEST':
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: false
       }
 
     case 'DELETE_CARD_SUCCESS':
@@ -95,12 +106,14 @@ const updateCardList = (state, action) => {
 
       return {
         cards: deleteCard(idx),
+        error: false
       }
 
     case 'DELETE_CARD_FAILURE':
 
       return {
-        ...state.cardList
+        ...state.cardList,
+        error: true
         //TODO implement error case
       }
 

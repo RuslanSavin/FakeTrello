@@ -3,7 +3,8 @@ const updateStatusList = (state, action) => {
   if (state === undefined) {
     return {
       statuses: [],
-      loading: true
+      loading: true,
+      error: false
     };
   }
 
@@ -11,20 +12,23 @@ const updateStatusList = (state, action) => {
     case 'FETCH_STATUSES_REQUEST':
       return {
         statuses: [],
-        loading: true
+        loading: true,
+        error: false
       }
 
 
     case 'FETCH_STATUSES_SUCCESS':
       return {
         statuses: action.payload,
-        loading: false
+        loading: false,
+        error: false
       }
 
     case 'FETCH_STATUSES_FAILURE':
       return {
         statuses: [],
-        loading: false
+        loading: false,
+        error: true
       }
 
     default:

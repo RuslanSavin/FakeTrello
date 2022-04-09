@@ -6,6 +6,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import Spinner from "../spinner";
 import './trello-page.scss'
+import ErrorIndicator from "../error-indicator";
 
 const TrelloPage = ({ statuses }) => {
 
@@ -21,7 +22,7 @@ const TrelloPage = ({ statuses }) => {
   )
 }
 
-const TrelloPageContainer = ({fetchStatuses, statuses, loading }) => {
+const TrelloPageContainer = ({fetchStatuses, statuses, loading, statusError, cardListError }) => {
   useEffect(() => {
     fetchStatuses();
   }, []);
@@ -30,11 +31,17 @@ const TrelloPageContainer = ({fetchStatuses, statuses, loading }) => {
     return <Spinner/>
   }
 
-  return <TrelloPage statuses={statuses}/>
+  return (
+    <>
+      { (statusError || cardListError) && <ErrorIndicator/> }
+      <TrelloPage statuses={statuses}/>
+    </>
+
+  )
 }
 
-const mapStateToProps = ({ statusList: { statuses, loading } }) => {
-  return { statuses, loading }
+const mapStateToProps = ({ statusList: { statuses, loading, error: statusError }, cardList : { error: cardListError} }) => {
+  return { statuses, loading, statusError, cardListError }
 }
 
 const mapDispatchToProps = (dispatch, { trelloService }) => {

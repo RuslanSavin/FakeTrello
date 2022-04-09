@@ -7,6 +7,7 @@ import Spinner from "../spinner";
 import CardListItem from "../card-list-item";
 import NewCard from "../new-card";
 import './card-list.scss'
+import ErrorIndicator from "../error-indicator";
 
 const CardList = ({status, title, cards}) => {
 
