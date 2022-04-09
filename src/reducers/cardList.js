@@ -11,14 +11,14 @@ const updateCardList = (state, action) => {
     return [
       ...state.cardList.cards.slice(0, idx),
       item,
-      ...state.cardList.cards.slice(idx + 2)
+      ...state.cardList.cards.slice(idx + 1)
     ]
   }
 
   const deleteCard = (idx) => {
     return [
       ...state.cardList.cards.slice(0, idx),
-      ...state.cardList.cards.slice(idx + 2)
+      ...state.cardList.cards.slice(idx + 1)
     ]
   }
 
