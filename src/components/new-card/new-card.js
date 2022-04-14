@@ -16,7 +16,7 @@ const NewCard = ({ createCard, status }) => {
         className="newCardForm"
         onSubmit={(e) => {
           e.preventDefault();
-          createCard(collectFormData(e).slice(0, -1).concat(`,"status":"${status}"}`));
+          createCard({...collectFormData(e), status: status});
           e.target.reset();
         }}>
         <InputWithLabel inputName="title" label="Title"/>
@@ -27,9 +27,6 @@ const NewCard = ({ createCard, status }) => {
   )
 }
 
-const mapStateToProps = () => {
-  return {}
-}
 
 const mapDispatchToProps = (dispatch, { trelloService }) => {
   return {
@@ -39,5 +36,5 @@ const mapDispatchToProps = (dispatch, { trelloService }) => {
 
 export default compose(
   withTrelloService(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(NewCard)

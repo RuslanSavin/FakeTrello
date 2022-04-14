@@ -1,8 +1,8 @@
 const collectFormData = (event) => {
   const formData = new FormData(event.target);
 
-  const json = JSON.stringify(Object.fromEntries(formData.entries()));
-  return json;
+  const data = Object.fromEntries(formData.entries());
+  return data;
 }
 
 export default collectFormData;

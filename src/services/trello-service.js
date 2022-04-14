@@ -4,48 +4,55 @@ export default class TrelloService {
 
   #apiBase = 'https://radiant-temple-07706.herokuapp.com'
 
-  getResource = async (url) => {
-    const res = await fetch(`${this.#apiBase}${url}`, {
-      headers: { 'Authorization': `Bearer ${getToken()}` }
-    });
+  getRequestHeaders = (withAuth = true) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
+    if (withAuth) {
+      headers['Authorization'] = `Bearer ${getToken()}`;
+    }
+
+    return headers;
+  }
+
+  throwErrorResNoOk = (res) => {
     if (!res.ok) {
       throw new Error(`Could not fetch ${url}` +
         `, received ${res.status}`)
     }
+  }
+
+  getResource = async (url) => {
+    const res = await fetch(`${this.#apiBase}${url}`, {
+      headers: this.getRequestHeaders()
+    });
+
+    this.throwErrorResNoOk(res);
+
     return await res.json();
   };
 
-  postResource = async (url, data, jwt = '') => {
-    const headers = jwt ? {'Content-Type': 'application/json', 'Authorization': `Bearer ${jwt}`} : {'Content-Type': 'application/json'}
+  postResource = async (url, data, withAuth = true) => {
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "POST",
-      headers: headers,
-      body: data
+      headers: this.getRequestHeaders(withAuth),
+      body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
-      console.log(res)
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}, ${res.statusText}`)
-    }
+    this.throwErrorResNoOk(res);
 
     return await res.json();
   };
 
   putResource = async (url, data) => {
-    console.log('data', data)
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "PUT",
-      headers: { 'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${getToken()}` },
-      body: data
+      headers: this.getRequestHeaders(),
+      body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
-    }
+    this.throwErrorResNoOk(res);
 
     return await res.json();
   }
@@ -53,20 +60,17 @@ export default class TrelloService {
   deleteResource = async (url, data) => {
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "DELETE",
-      headers: { 'Authorization': `Bearer ${getToken()}` },
-      body: data
+      headers: this.getRequestHeaders(),
+      body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
-    }
+    this.throwErrorResNoOk(res);
 
     return await res.json();
   }
 
   postRegister = async (data) => {
-    const res = await this.postResource('/auth/local/register', data)
+    const res = await this.postResource('/auth/local/register', data, false)
 
     setToken(res.jwt);
 
@@ -74,7 +78,7 @@ export default class TrelloService {
   }
 
   postLogin = async (data) => {
-    const res = await this.postResource('/auth/local', data)
+    const res = await this.postResource('/auth/local', data, false)
     setToken(res.jwt);
 
     return res;
@@ -93,7 +97,6 @@ export default class TrelloService {
   }
 
   updateCard = async (id, data) => {
-    console.log('trello', id, data)
     return await this.putResource(`/cards/${id}`, data)
   }
 
