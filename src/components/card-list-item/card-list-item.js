@@ -8,8 +8,16 @@ import {connect} from "react-redux";
 import collectFormData from "../../utils/collectFormData";
 
 const CardListItem = ({card, updateCard, deleteCard}) => {
+
   const { id, title, description } = card;
   const changeForm = useRef(null)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateCard(card.id, collectFormData(e));
+    changeForm.current.classList.toggle("hidden");
+    changeForm.current.reset();
+  }
 
   return (
     <li>
@@ -30,11 +38,7 @@ const CardListItem = ({card, updateCard, deleteCard}) => {
       <form
         className="hidden"
         ref={changeForm}
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateCard(card.id, collectFormData(e));
-          changeForm.current.classList.toggle("hidden");
-        }}>
+        onSubmit={handleSubmit}>
         <InputWithLabel inputName="title" label="Title"/>
         <InputWithLabel inputName="description" label="Description"/>
         <select name="status">

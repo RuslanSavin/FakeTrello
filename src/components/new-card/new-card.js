@@ -9,16 +9,18 @@ import collectFormData from "../../utils/collectFormData";
 
 const NewCard = ({ createCard, status }) => {
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createCard({...collectFormData(e), status: status});
+    e.target.reset();
+  }
+
   return (
     <div className="newCardWrapper">
       <h3 className="newCardHeader">Create new card</h3>
       <form
         className="newCardForm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          createCard({...collectFormData(e), status: status});
-          e.target.reset();
-        }}>
+        onSubmit={handleSubmit}>
         <InputWithLabel inputName="title" label="Title"/>
         <InputWithLabel inputName="description" label="Description"/>
         <button>Submit</button>
