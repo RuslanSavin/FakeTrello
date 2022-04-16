@@ -1,7 +1,7 @@
 import React from "react";
 import './input-with-label.scss'
 
-const InputWithLabel = ({inputName, label, type = 'text'}) => {
+const InputWithLabel = React.memo(({inputName, label, type = 'text'}) => {
   return (
     <>
       <label className="inputLabel" htmlFor={inputName}>{label}</label>
@@ -9,6 +9,6 @@ const InputWithLabel = ({inputName, label, type = 'text'}) => {
     </>
 
   )
-}
+})
 
 export default InputWithLabel;

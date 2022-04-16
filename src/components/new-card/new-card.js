@@ -6,7 +6,7 @@ import './new-card.scss'
 import collectFormData from "../../utils/collectFormData";
 import {useTrelloService} from "../hooks";
 
-const NewCard = ({ status }) => {
+const NewCard = React.memo(({ status }) => {
 
   const trelloService = useTrelloService();
   const dispatch = useDispatch();
@@ -29,6 +29,6 @@ const NewCard = ({ status }) => {
       </form>
     </div>
   )
-}
+})
 
 export default NewCard
