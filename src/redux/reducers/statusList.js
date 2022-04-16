@@ -1,12 +1,8 @@
-const updateStatusList = (state, action) => {
-
-  if (state === undefined) {
-    return {
-      statuses: [],
-      loading: true,
-      error: false
-    };
-  }
+const updateStatusList = (state = {
+  statuses: [],
+  loading: true,
+  error: false
+}, action) => {
 
   switch (action.type) {
     case 'FETCH_STATUSES_REQUEST':
@@ -32,7 +28,7 @@ const updateStatusList = (state, action) => {
       }
 
     default:
-      return state.statusList;
+      return state;
   }
 }
 

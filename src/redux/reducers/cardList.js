@@ -1,25 +1,22 @@
-const updateCardList = (state, action) => {
+const updateCardList = (state = {
+  cards: [],
+  loading: true,
+  error: false
+}, action) => {
 
-  if (state === undefined) {
-    return {
-      cards: [],
-      loading: true,
-      error: false
-    };
-  }
 
   const updateCard = (idx, item) => {
     return [
-      ...state.cardList.cards.slice(0, idx),
+      ...state.cards.slice(0, idx),
       item,
-      ...state.cardList.cards.slice(idx + 1)
+      ...state.cards.slice(idx + 1)
     ]
   }
 
   const deleteCard = (idx) => {
     return [
-      ...state.cardList.cards.slice(0, idx),
-      ...state.cardList.cards.slice(idx + 1)
+      ...state.cards.slice(0, idx),
+      ...state.cards.slice(idx + 1)
     ]
   }
 
@@ -48,16 +45,16 @@ const updateCardList = (state, action) => {
 
     case 'UPDATE_CARD_REQUEST':
       return {
-        ...state.cardList,
+        ...state,
         error: false
       }
 
     case 'UPDATE_CARD_SUCCESS':
       const { id: cardId } = action.payload;
-      const cardIndex = state.cardList.cards.findIndex(({id}) => id === cardId);
+      const cardIndex = state.cards.findIndex(({id}) => id === cardId);
 
       return {
-        ...state.cardList,
+        ...state,
         cards: updateCard(cardIndex, action.payload),
         error: false
       }
@@ -65,22 +62,22 @@ const updateCardList = (state, action) => {
     case 'UPDATE_CARD_FAILURE':
 
       return {
-        ...state.cardList,
+        ...state,
         error: true
         //TODO implement error case
       }
 
     case 'CREATE_CARD_REQUEST':
       return {
-        ...state.cardList,
+        ...state,
         error: false
       }
 
     case 'CREATE_CARD_SUCCESS':
       return {
-          ...state.cardList,
+          ...state,
           cards: [
-            ...state.cardList.cards,
+            ...state.cards,
             action.payload
           ],
           error: false
@@ -89,20 +86,20 @@ const updateCardList = (state, action) => {
     case 'CREATE_CARD_FAILURE':
 
       return {
-        ...state.cardList,
+        ...state,
         error: true
         //TODO implement error case
       }
 
     case 'DELETE_CARD_REQUEST':
       return {
-        ...state.cardList,
+        ...state,
         error: false
       }
 
     case 'DELETE_CARD_SUCCESS':
       const { id: idCard } = action.payload;
-      const idx = state.cardList.cards.findIndex(({id}) => id === idCard);
+      const idx = state.cards.findIndex(({id}) => id === idCard);
 
       return {
         cards: deleteCard(idx),
@@ -112,13 +109,13 @@ const updateCardList = (state, action) => {
     case 'DELETE_CARD_FAILURE':
 
       return {
-        ...state.cardList,
+        ...state,
         error: true
         //TODO implement error case
       }
 
     default:
-      return state.cardList
+      return state
   }
 }
 
