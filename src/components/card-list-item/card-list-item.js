@@ -1,20 +1,21 @@
 import React, { useRef } from "react";
 import InputWithLabel from "../input-with-label/input-with-label";
 import './card-list-item.scss'
-import {deleteCard, updateCard} from "../../actions";
-import {compose} from "redux";
-import withTrelloService from "../hoc";
-import {connect} from "react-redux";
+import {deleteCard, updateCard} from "../../redux/actions";
+import {useDispatch} from "react-redux";
 import collectFormData from "../../utils/collectFormData";
+import {useTrelloService} from "../hooks";
 
-const CardListItem = ({card, updateCard, deleteCard}) => {
+const CardListItem = ({ card }) => {
 
+  const trelloService = useTrelloService();
+  const dispatch = useDispatch();
   const { id, title, description } = card;
   const changeForm = useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateCard(card.id, collectFormData(e));
+    updateCard(trelloService, dispatch)(card.id, collectFormData(e));
     changeForm.current.classList.toggle("hidden");
     changeForm.current.reset();
   }
@@ -31,7 +32,7 @@ const CardListItem = ({card, updateCard, deleteCard}) => {
       <button
         className="deleteBtn"
         onClick={() => {
-          deleteCard(id);
+          deleteCard(trelloService, dispatch)(id);
         }}>
         Delete
       </button>
@@ -55,18 +56,4 @@ const CardListItem = ({card, updateCard, deleteCard}) => {
   )
 }
 
-const mapStateToProps = ({ cardList: { cards, loading } }) => {
-  return { cards, loading }
-}
-
-const mapDispatchToProps = (dispatch, { trelloService }) => {
-  return {
-    updateCard: updateCard(trelloService, dispatch),
-    deleteCard: deleteCard(trelloService, dispatch)
-  }
-}
-
-export default compose(
-  withTrelloService(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(CardListItem)
+export default CardListItem

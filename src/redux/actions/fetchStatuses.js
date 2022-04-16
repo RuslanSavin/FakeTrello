@@ -1,5 +1,7 @@
-const fetchStatuses = (trelloService, dispatch) => () => {
+
+const fetchStatuses = (trelloService, dispatch) => {
   dispatch(statusesRequested());
+  console.log(3);
   trelloService.getStatuses()
     .then((data) => {
       dispatch(statusesLoaded(data))

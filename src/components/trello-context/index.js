@@ -1,3 +1,3 @@
-import { TrelloProvider, TrelloConsumer } from "./trello-context";
+import { TrelloContext } from "./trello-context";
 
-export {TrelloProvider, TrelloConsumer }
+export {TrelloContext }

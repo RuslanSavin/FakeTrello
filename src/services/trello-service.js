@@ -1,10 +1,10 @@
 import {getToken, setToken} from "../utils/local-storage.js";
 
-export default class TrelloService {
+class TrelloService {
 
   #apiBase = 'https://radiant-temple-07706.herokuapp.com'
 
-  getRequestHeaders = (withAuth = true) => {
+  #getRequestHeaders = (withAuth = true) => {
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -16,7 +16,7 @@ export default class TrelloService {
     return headers;
   }
 
-  throwErrorResNoOk = (res) => {
+  #throwErrorResNoOk = (res) => {
     if (!res.ok) {
       throw new Error(`Could not fetch ${url}` +
         `, received ${res.status}`)
@@ -25,10 +25,10 @@ export default class TrelloService {
 
   getResource = async (url) => {
     const res = await fetch(`${this.#apiBase}${url}`, {
-      headers: this.getRequestHeaders()
+      headers: this.#getRequestHeaders()
     });
 
-    this.throwErrorResNoOk(res);
+    this.#throwErrorResNoOk(res);
 
     return await res.json();
   };
@@ -36,11 +36,11 @@ export default class TrelloService {
   postResource = async (url, data, withAuth = true) => {
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "POST",
-      headers: this.getRequestHeaders(withAuth),
+      headers: this.#getRequestHeaders(withAuth),
       body: JSON.stringify(data)
     });
 
-    this.throwErrorResNoOk(res);
+    this.#throwErrorResNoOk(res);
 
     return await res.json();
   };
@@ -48,11 +48,11 @@ export default class TrelloService {
   putResource = async (url, data) => {
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "PUT",
-      headers: this.getRequestHeaders(),
+      headers: this.#getRequestHeaders(),
       body: JSON.stringify(data)
     });
 
-    this.throwErrorResNoOk(res);
+    this.#throwErrorResNoOk(res);
 
     return await res.json();
   }
@@ -60,11 +60,11 @@ export default class TrelloService {
   deleteResource = async (url, data) => {
     let res = await fetch(`${this.#apiBase}${url}`, {
       method: "DELETE",
-      headers: this.getRequestHeaders(),
+      headers: this.#getRequestHeaders(),
       body: JSON.stringify(data)
     });
 
-    this.throwErrorResNoOk(res);
+    this.#throwErrorResNoOk(res);
 
     return await res.json();
   }
@@ -108,5 +108,7 @@ export default class TrelloService {
     return await this.getResource("/statuses");
   }
 }
+
+export default new TrelloService();
 
 

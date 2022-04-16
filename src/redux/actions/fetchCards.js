@@ -1,4 +1,4 @@
-const fetchCards = (trelloService, dispatch) => () => {
+const fetchCards = (trelloService, dispatch) => {
   dispatch(cardsRequested());
   trelloService.getAllCards()
     .then((data) => {

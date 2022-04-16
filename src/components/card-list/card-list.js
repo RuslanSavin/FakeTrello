@@ -1,13 +1,12 @@
 import React, {useEffect} from "react";
-import {fetchCards, fetchStatuses} from "../../actions";
-import {compose} from "redux";
-import withTrelloService from "../hoc";
-import {connect} from "react-redux";
+import {fetchCards} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
 import Spinner from "../spinner";
 import CardListItem from "../card-list-item";
 import NewCard from "../new-card";
 import './card-list.scss'
-import ErrorIndicator from "../error-indicator";
+import {useTrelloService} from "../hooks";
+import {selectCards} from "../../redux/selectors";
 
 const CardList = ({status, title, cards}) => {
 
@@ -28,10 +27,14 @@ const CardList = ({status, title, cards}) => {
   )
 }
 
-const CardListContainer = ({fetchCards, cards, loading, title, status}) => {
+const CardListContainer = ({title, status}) => {
+
+  const trelloService = useTrelloService();
+  const { cards, loading } = useSelector(selectCards);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCards();
+    fetchCards(trelloService, dispatch);
   }, []);
 
   if (loading) {
@@ -45,7 +48,7 @@ const CardListContainer = ({fetchCards, cards, loading, title, status}) => {
 
 
 
-const mapStateToProps = ({ cardList: { cards, loading } }) => {
+/*const mapStateToProps = ({ cardList: { cards, loading } }) => {
   return { cards, loading }
 }
 
@@ -53,10 +56,7 @@ const mapDispatchToProps = (dispatch, { trelloService }) => {
   return {
     fetchCards: fetchCards(trelloService, dispatch)
   }
-}
+}*/
 
 
-export default compose(
-  withTrelloService(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(CardListContainer)
+export default CardListContainer

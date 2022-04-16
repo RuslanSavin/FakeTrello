@@ -1,17 +1,19 @@
 import React from "react";
 import InputWithLabel from "../input-with-label/input-with-label";
-import {createCard} from "../../actions";
-import {compose} from "redux";
-import withTrelloService from "../hoc";
-import {connect} from "react-redux";
+import {createCard} from "../../redux/actions";
+import {useDispatch} from "react-redux";
 import './new-card.scss'
 import collectFormData from "../../utils/collectFormData";
+import {useTrelloService} from "../hooks";
 
-const NewCard = ({ createCard, status }) => {
+const NewCard = ({ status }) => {
+
+  const trelloService = useTrelloService();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createCard({...collectFormData(e), status: status});
+    createCard(trelloService, dispatch)({...collectFormData(e), status: status});
     e.target.reset();
   }
 
@@ -29,14 +31,4 @@ const NewCard = ({ createCard, status }) => {
   )
 }
 
-
-const mapDispatchToProps = (dispatch, { trelloService }) => {
-  return {
-    createCard: createCard(trelloService, dispatch)
-  }
-}
-
-export default compose(
-  withTrelloService(),
-  connect(null, mapDispatchToProps)
-)(NewCard)
+export default NewCard

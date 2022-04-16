@@ -1,11 +1,7 @@
 import React from 'react';
 
-const {
-  Provider: TrelloProvider,
-  Consumer: TrelloConsumer
-} = React.createContext();
+const TrelloContext = React.createContext();
 
 export {
-  TrelloProvider,
-  TrelloConsumer
+  TrelloContext
 };

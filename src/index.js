@@ -2,27 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-
-
-import store from './store';
-import TrelloService from "./services/trello-service";
+import store from './redux/store';
+import trelloService from "./services/trello-service";
 import ErrorBoundry from "./components/error-boundry";
-import {TrelloProvider} from "./components/trello-context";
+import {TrelloContext} from "./components/trello-context";
 import App from "./components/app";
-
-const trelloService = new TrelloService();
-
-
 
 ReactDOM.render(
   <Provider store={store}>
     <ErrorBoundry>
-      <TrelloProvider value={trelloService}>
+      <TrelloContext.Provider value={trelloService}>
         <Router>
           <App />
         </Router>
-      </TrelloProvider>
+      </TrelloContext.Provider>
     </ErrorBoundry>
   </Provider>,
   document.getElementById('root')

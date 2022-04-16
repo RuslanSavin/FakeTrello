@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import InputWithLabel from "../input-with-label/input-with-label";
-import withTrelloService from "../hoc";
 import {Link} from "react-router-dom";
 import collectFormData from "../../utils/collectFormData";
+import {useTrelloService} from "../hooks";
 
-const LoginPage = ({trelloService, setAuth}) => {
+const LoginPage = ({setAuth}) => {
 
-  const {postLogin} = trelloService;
+  const {postLogin} = useTrelloService();
   const errorRef = useRef();
 
   return (
@@ -31,4 +31,4 @@ const LoginPage = ({trelloService, setAuth}) => {
 }
 
 
-export default withTrelloService()(LoginPage);
+export default LoginPage;
