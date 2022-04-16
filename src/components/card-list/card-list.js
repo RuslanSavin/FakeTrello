@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {fetchCards} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import Spinner from "../spinner";
@@ -17,7 +17,7 @@ const CardList = ({status, title, cards}) => {
         {
           cards.filter((card) => card.status === status).map((card) => {
             return (
-              <CardListItem key={card.id} card={card}/>
+              useMemo(() => <CardListItem key={card.id} card={card}/>, [card])
               )
           })
         }

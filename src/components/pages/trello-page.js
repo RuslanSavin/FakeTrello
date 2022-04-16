@@ -14,7 +14,9 @@ const TrelloPage = ({ statuses }) => {
     <div className="trelloWrapper">
       {
         statuses.map((status) => {
-        return <CardList key={status.id} title={status.title} status={status.value}/>
+        return (
+          <CardList key={status.id} title={status.title} status={status.value}/>
+        )
         })
       }
     </div>
@@ -29,12 +31,8 @@ const TrelloPageContainer = () => {
   const {cardListError} = useSelector(selectCards);
   const dispatch = useDispatch();
 
-  console.log(statuses, loading, statusError);
-
   useEffect(() => {
-    console.log('statuses')
     fetchStatuses(trelloService, dispatch);
-    console.log('statuses2')
   }, []);
 
   if (loading) {
