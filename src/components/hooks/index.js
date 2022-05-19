@@ -1,3 +1,3 @@
-import {useTrelloService} from "./useTrelloService";
+import { useTrelloService } from "./useTrelloService";
 
 export { useTrelloService };

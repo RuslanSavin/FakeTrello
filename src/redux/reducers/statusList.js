@@ -1,35 +1,36 @@
-const updateStatusList = (state = {
-  statuses: [],
-  loading: true,
-  error: false
-}, action) => {
-
+const updateStatusList = (
+  state = {
+    statuses: [],
+    loading: true,
+    error: false,
+  },
+  action
+) => {
   switch (action.type) {
-    case 'FETCH_STATUSES_REQUEST':
+    case "FETCH_STATUSES_REQUEST":
       return {
         statuses: [],
         loading: true,
-        error: false
-      }
+        error: false,
+      };
 
-
-    case 'FETCH_STATUSES_SUCCESS':
+    case "FETCH_STATUSES_SUCCESS":
       return {
         statuses: action.payload,
         loading: false,
-        error: false
-      }
+        error: false,
+      };
 
-    case 'FETCH_STATUSES_FAILURE':
+    case "FETCH_STATUSES_FAILURE":
       return {
         statuses: [],
         loading: false,
-        error: true
-      }
+        error: true,
+      };
 
     default:
       return state;
   }
-}
+};
 
 export default updateStatusList;

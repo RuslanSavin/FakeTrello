@@ -1,34 +1,46 @@
 import React from "react";
-import InputWithLabel from "../input-with-label/input-with-label";
-import {createCard} from "../../redux/actions";
-import {useDispatch} from "react-redux";
-import './new-card.scss'
-import collectFormData from "../../utils/collectFormData";
-import {useTrelloService} from "../hooks";
+import { createCard } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import "./new-card.scss";
+import { useTrelloService } from "../hooks";
+import { useForm } from "react-hook-form";
+import { validationRules } from "../../validation-rules";
 
 const NewCard = React.memo(({ status }) => {
-
   const trelloService = useTrelloService();
   const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
+  const onSubmit = (data, e) => {
     e.preventDefault();
-    createCard(trelloService, dispatch)({...collectFormData(e), status: status});
-    e.target.reset();
-  }
+    createCard(trelloService, dispatch)({ ...data, status: status });
+    reset();
+  };
 
   return (
     <div className="newCardWrapper">
-      <h3 className="newCardHeader">Create new card</h3>
-      <form
-        className="newCardForm"
-        onSubmit={handleSubmit}>
-        <InputWithLabel inputName="title" label="Title"/>
-        <InputWithLabel inputName="description" label="Description"/>
+      <h5 className="newCardHeader">Create new card</h5>
+      <form className="newCardForm" onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="title">
+          Title <span className="required">*</span>
+        </label>
+        <input
+          id="title"
+          {...register("title", validationRules.title)}
+          type="text"
+        />
+        {errors.title && <div role="alert">{errors.title.message}</div>}
+        <label htmlFor="description">Description</label>
+        <textarea id="description" {...register("description")} rows={3} />
         <button>Submit</button>
       </form>
     </div>
-  )
-})
+  );
+});
 
-export default NewCard
+export default NewCard;

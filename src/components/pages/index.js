@@ -1,9 +1,5 @@
-import LoginPage from "./login-page";
-import RegisterPage from "./register-page";
-import TrelloPage from "./trello-page";
+import LoginPage from "./LoginPage/login-page";
+import RegisterPage from "./RegisterPage/register-page";
+import TrelloPage from "./TrelloPage/trello-page";
 
-export {
-  TrelloPage,
-  LoginPage,
-  RegisterPage
-}
+export { TrelloPage, LoginPage, RegisterPage };

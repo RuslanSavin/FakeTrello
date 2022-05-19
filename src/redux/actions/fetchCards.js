@@ -1,30 +1,31 @@
 const fetchCards = (trelloService, dispatch) => {
   dispatch(cardsRequested());
-  trelloService.getAllCards()
+  trelloService
+    .getAllCards()
     .then((data) => {
-      dispatch(cardsLoaded(data))
+      dispatch(cardsLoaded(data));
     })
-    .catch((err) => dispatch(cardsError(err)))
-}
+    .catch((err) => dispatch(cardsError(err)));
+};
 
 const cardsRequested = () => {
   return {
-    type: 'FETCH_CARDS_REQUEST'
-  }
-}
+    type: "FETCH_CARDS_REQUEST",
+  };
+};
 
 const cardsLoaded = (cards) => {
   return {
-    type: 'FETCH_CARDS_SUCCESS',
-    payload: cards
-  }
-}
+    type: "FETCH_CARDS_SUCCESS",
+    payload: cards,
+  };
+};
 
 const cardsError = (error) => {
   return {
-    type: 'FETCH_CARDS_FAILURE',
-    payload: error
-  }
-}
+    type: "FETCH_CARDS_FAILURE",
+    payload: error,
+  };
+};
 
 export default fetchCards;

@@ -1,3 +1,3 @@
 import { TrelloContext } from "./trello-context";
 
-export {TrelloContext }
+export { TrelloContext };

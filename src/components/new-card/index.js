@@ -1,3 +1,3 @@
-import newCard from "./new-card"
+import newCard from "./new-card";
 
 export default newCard;

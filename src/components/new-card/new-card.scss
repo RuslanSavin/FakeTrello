@@ -8,5 +8,17 @@
       width: 50%;
       margin-top: 10px;
     }
+    label {
+      display: block;
+      span.required {
+        color: red;
+      }
+    }
+    textarea {
+      resize: none;
+    }
+    div[role='alert'] {
+      color: red;
+    }
   }
 }

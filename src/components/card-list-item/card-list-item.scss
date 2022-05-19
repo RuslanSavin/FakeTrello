@@ -25,5 +25,16 @@ li {
   select {
     margin: 10px 10px 0 0;
   }
-
+  label {
+    display: block;
+    span.required {
+      color: red;
+    }
+  }
+  textarea {
+    resize: none;
+  }
+  div[role='alert'] {
+    color: red;
+  }
 }

@@ -1,48 +1,63 @@
 import React, { useRef } from "react";
-import InputWithLabel from "../input-with-label/input-with-label";
-import './card-list-item.scss'
-import {deleteCard, updateCard} from "../../redux/actions";
-import {useDispatch} from "react-redux";
-import collectFormData from "../../utils/collectFormData";
-import {useTrelloService} from "../hooks";
+import "./card-list-item.scss";
+import { deleteCard, updateCard } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { useTrelloService } from "../hooks";
+import { useForm } from "react-hook-form";
+import { validationRules } from "../../validation-rules";
 
 const CardListItem = ({ card }) => {
-
   const trelloService = useTrelloService();
   const dispatch = useDispatch();
-  const { id, title, description } = card;
-  const changeForm = useRef(null)
+  const changeForm = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateCard(trelloService, dispatch)(card.id, collectFormData(e));
+  const onSubmit = (data) => {
+    updateCard(trelloService, dispatch)(card.id, data);
     changeForm.current.classList.toggle("hidden");
-    changeForm.current.reset();
-  }
+    reset();
+  };
 
   return (
     <li>
       <button
         className="changeBtn"
         onClick={() => {
-        changeForm.current.classList.toggle("hidden");
-      }}>
+          changeForm.current.classList.toggle("hidden");
+        }}
+      >
         Change
       </button>
       <button
         className="deleteBtn"
         onClick={() => {
-          deleteCard(trelloService, dispatch)(id);
-        }}>
+          deleteCard(trelloService, dispatch)(card.id);
+        }}
+      >
         Delete
       </button>
       <form
         className="hidden"
         ref={changeForm}
-        onSubmit={handleSubmit}>
-        <InputWithLabel inputName="title" label="Title"/>
-        <InputWithLabel inputName="description" label="Description"/>
-        <select name="status">
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <label htmlFor="title">
+          Title <span className="required">*</span>
+        </label>
+        <input
+          id="title"
+          {...register("title", validationRules.title)}
+          type="text"
+        />
+        {errors.title && <div role="alert">{errors.title.message}</div>}
+        <label htmlFor="description">Description</label>
+        <textarea id="description" {...register("description")} rows={3} />
+        <select defaultValue={card.status} {...register("status")}>
           <option value="to_do">To Do</option>
           <option value="in_progress">In Progress</option>
           <option value="testing">Testing</option>
@@ -50,10 +65,10 @@ const CardListItem = ({ card }) => {
         </select>
         <button>Submit</button>
       </form>
-      <h3 className="cardTitle">{title}</h3>
-      <p>{description}</p>
+      <h3 className="cardTitle">{card.title}</h3>
+      <p>{card.description}</p>
     </li>
-  )
-}
+  );
+};
 
-export default CardListItem
+export default CardListItem;
