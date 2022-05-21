@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import "./card-list-item.scss";
 import { deleteCard, updateCard } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-import { useTrelloService } from "../hooks";
+import { useTrelloService } from "../hooks/useTrelloService";
 import { useForm } from "react-hook-form";
 import { validationRules } from "../../validation-rules";
 

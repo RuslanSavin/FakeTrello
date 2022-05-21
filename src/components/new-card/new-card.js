@@ -2,7 +2,7 @@ import React from "react";
 import { createCard } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import "./new-card.scss";
-import { useTrelloService } from "../hooks";
+import { useTrelloService } from "../hooks/useTrelloService";
 import { useForm } from "react-hook-form";
 import { validationRules } from "../../validation-rules";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTrelloService } from "../../hooks";
+import { useTrelloService } from "../../hooks/useTrelloService";
 import { useForm } from "react-hook-form";
 
 import "./register-page.scss";

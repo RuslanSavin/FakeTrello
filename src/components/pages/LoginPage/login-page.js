@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTrelloService } from "../../hooks";
+import { useTrelloService } from "../../hooks/useTrelloService";
 import { useForm } from "react-hook-form";
 
 import "./login-page.scss";
@@ -19,7 +19,7 @@ const LoginPage = ({ setAuth }) => {
       await postLogin(data);
       setAuth(true);
     } catch (error) {
-      setAuth(false);
+      console.error(error);
     }
   };
 
@@ -29,6 +29,7 @@ const LoginPage = ({ setAuth }) => {
         Login <span className="required">*</span>
       </label>
       <input
+        data-testid="identifier"
         id="identifier"
         {...register("identifier", validationRules.identifier)}
         type="text"
@@ -40,6 +41,7 @@ const LoginPage = ({ setAuth }) => {
         Password <span className="required">*</span>
       </label>
       <input
+        data-testid="password"
         id="password"
         {...register("password", validationRules.password)}
         type="password"

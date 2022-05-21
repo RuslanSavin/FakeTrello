@@ -1,14 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import CardList from "../../card-list/card-list";
-import { fetchStatuses } from "../../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../spinner";
 import "./trello-page.scss";
 import ErrorIndicator from "../../error-indicator";
-import { useTrelloService } from "../../hooks";
-import { selectCards, selectStatuses } from "../../../redux/selectors";
+import {useStatuses} from "../../hooks/useStatuses";
 
-const TrelloPage = ({ statuses }) => {
+const TrelloPage = () => {
+
+  const {statuses ,loading, statusError, cardListError } = useStatuses();
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (statusError || cardListError) {
+    return <ErrorIndicator />
+  }
+
   return (
     <div className="trelloWrapper">
       {statuses.map((status) => {
@@ -24,26 +32,4 @@ const TrelloPage = ({ statuses }) => {
   );
 };
 
-const TrelloPageContainer = () => {
-  const trelloService = useTrelloService();
-  const { statuses, loading, error: statusError } = useSelector(selectStatuses);
-  const { cardListError } = useSelector(selectCards);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    fetchStatuses(trelloService, dispatch);
-  }, []);
-
-  if (loading) {
-    return <Spinner />;
-  }
-
-  return (
-    <>
-      {(statusError || cardListError) && <ErrorIndicator />}
-      <TrelloPage statuses={statuses} />
-    </>
-  );
-};
-
-export default TrelloPageContainer;
+export default TrelloPage;

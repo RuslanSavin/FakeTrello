@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import store from "./redux/store";
@@ -10,7 +10,9 @@ import App from "./components/app";
 
 import "./index.scss";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <Provider store={store}>
     <ErrorBoundry>
       <TrelloContext.Provider value={trelloService}>
@@ -19,6 +21,5 @@ ReactDOM.render(
         </Router>
       </TrelloContext.Provider>
     </ErrorBoundry>
-  </Provider>,
-  document.getElementById("root")
+  </Provider>
 );
