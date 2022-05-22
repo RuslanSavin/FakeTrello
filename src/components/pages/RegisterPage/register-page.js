@@ -31,6 +31,7 @@ const RegisterPage = ({ setAuth }) => {
           Login <span className="required">*</span>
         </label>
         <input
+          data-testid="username"
           id="username"
           {...register("username", validationRules.identifier)}
           type="text"
@@ -40,6 +41,7 @@ const RegisterPage = ({ setAuth }) => {
           Email <span className="This field is required">*</span>
         </label>
         <input
+          data-testid="email"
           id="email"
           {...register("email", validationRules.email)}
           type="email"
@@ -49,6 +51,7 @@ const RegisterPage = ({ setAuth }) => {
           Password <span className="required">*</span>
         </label>
         <input
+          data-testid="password"
           id="password"
           {...register("password", validationRules.password)}
           type="password"

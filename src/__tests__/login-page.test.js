@@ -10,6 +10,7 @@ const mockSetAuth = jest.fn();
 
 describe("login page", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     renderWithProvider(<LoginPage setAuth={mockSetAuth} />);
   });
 

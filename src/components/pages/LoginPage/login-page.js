@@ -19,7 +19,7 @@ const LoginPage = ({ setAuth }) => {
       await postLogin(data);
       setAuth(true);
     } catch (error) {
-      console.error(error);
+      setAuth(false);
     }
   };
 
